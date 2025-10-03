@@ -1,0 +1,11 @@
+C:\Users\Илья\source\repos\AI_Project\MO-31-2_Karzhanovskiy\bin\Debug\MO-31-2_Karzhanovskiy.exe.config
+C:\Users\Илья\source\repos\AI_Project\MO-31-2_Karzhanovskiy\bin\Debug\MO-31-2_Karzhanovskiy.exe
+C:\Users\Илья\source\repos\AI_Project\MO-31-2_Karzhanovskiy\bin\Debug\MO-31-2_Karzhanovskiy.pdb
+C:\Users\Илья\source\repos\AI_Project\MO-31-2_Karzhanovskiy\obj\Debug\MO-31-2_Karzhanovskiy.csproj.AssemblyReference.cache
+C:\Users\Илья\source\repos\AI_Project\MO-31-2_Karzhanovskiy\obj\Debug\MO_31_2_Karzhanovskiy.Properties.Resources.resources
+C:\Users\Илья\source\repos\AI_Project\MO-31-2_Karzhanovskiy\obj\Debug\MO-31-2_Karzhanovskiy.csproj.GenerateResource.cache
+C:\Users\Илья\source\repos\AI_Project\MO-31-2_Karzhanovskiy\obj\Debug\MO-31-2_Karzhanovskiy.csproj.CoreCompileInputs.cache
+C:\Users\Илья\source\repos\AI_Project\MO-31-2_Karzhanovskiy\obj\Debug\MO-31-2_Karzhanovskiy.exe
+C:\Users\Илья\source\repos\AI_Project\MO-31-2_Karzhanovskiy\obj\Debug\MO-31-2_Karzhanovskiy.pdb
+C:\Users\Илья\source\repos\AI_Project\MO-31-2_Karzhanovskiy\obj\Debug\MO-31-2_Karzhanovskiy.exe.config
+C:\Users\Илья\source\repos\AI_Project\MO-31-2_Karzhanovskiy\obj\Debug\MO_31_2_Karzhanovskiy.FormMain.resources
