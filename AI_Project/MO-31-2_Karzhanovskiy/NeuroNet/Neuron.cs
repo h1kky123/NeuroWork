@@ -14,17 +14,16 @@ namespace MO_31_2_Karzhanovskiy.NeuroNet
         //Константы для функции активации
 
         //Свойства
-        private double[] Weights { get => weights; set => weights = value; }
-        private double[] Inputs { get => inputs; set => inputs = value; }
-        private double Output { get => output; }
-        private double Derivative { get => derivative; }
+        public double[] Weights { get => weights; set => weights = value; }
+        public double[] Inputs { get => inputs; set => inputs = value; }
+        public double Output { get => output; }
+        public double Derivative { get => derivative; }
         //Конструктор
         public Neuron(double[] memoryWeights, NeuronType typeNeuron)
         {
             type = typeNeuron;
             weights = memoryWeights;
         }
-
         public void Activator(double[] i)
         {
             inputs = i; //передача вектора входного сигнала в массив входных данных нейрона

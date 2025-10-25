@@ -3,6 +3,7 @@ using System.Configuration;
 using System.IO;
 using System.Windows.Forms;
 
+
 namespace MO_31_2_Karzhanovskiy.NeuroNet
 {
     abstract class Layer
@@ -63,6 +64,7 @@ namespace MO_31_2_Karzhanovskiy.NeuroNet
             }
         }
 
+
         //Метод работы с массивом синаптических весов слоя
         public double[,] WeightInitialize(MemoryMode mm, string path)
         {
@@ -89,33 +91,70 @@ namespace MO_31_2_Karzhanovskiy.NeuroNet
 
 
                 case MemoryMode.SET:
-                    string[] tmpLines = new string[numofneurons];
+                    tmpStr = "";
                     for (int i = 0; i < numofneurons; i++)
                     {
                         string[] tmpRow = new string[numofprevneurons + 1];
                         for (int j = 0; j < numofprevneurons + 1; j++)
                         {
-                            tmpRow[j] = weights[i, j].ToString(System.Globalization.CultureInfo.InvariantCulture); //Преобразуем число в строку и записываем в row
+                            tmpRow[j] = weights[i, j].ToString(System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        tmpLines[i] = string.Join(";", tmpRow); //соединяем все елементы tmpRow и присваиваем в tmpLines для текущего нейрона
+                        tmpStr += string.Join(";", tmpRow) + "\n";
                     }
-                    File.WriteAllLines(path, tmpLines); //запись в файл
+                    File.WriteAllText(path, tmpStr);
                     break;
 
 
                 case MemoryMode.INIT:
+                    Random random = new Random();
                     for (int i = 0; i < numofneurons; i++)
                     {
+                        double sum = 0.0;
+                        double squaredSum = 0.0;
+
+                        //Генерация весов
                         for (int j = 0; j < numofprevneurons + 1; j++)
                         {
-                            weights[i, j] = 0;
+                            weights[i, j] = random.NextDouble() * 2.0 - 1.0;
+                            sum += weights[i, j];
+                            squaredSum += weights[i, j] * weights[i, j];
+                        }
+
+                        //Вычисляем среднее и дисперсию
+                        double mean = sum / (numofprevneurons + 1);
+                        double variance = (squaredSum / (numofprevneurons + 1)) - (mean * mean);
+                        double root = Math.Sqrt(variance);
+
+                        //Нормализуем веса
+                        for (int j = 0; j < numofprevneurons + 1; j++)
+                        {
+                            weights[i, j] = (weights[i, j] - mean) / root;
                         }
                     }
-                    WeightInitialize(MemoryMode.SET, path);
+
+                    //Сохранение весов
+                    tmpStr = "";
+                    for (int i = 0; i < numofneurons; i++)
+                    {
+                        string[] tmpRow = new string[numofprevneurons + 1];
+                        for (int j = 0; j < numofprevneurons + 1; j++)
+                        {
+                            tmpRow[j] = weights[i, j].ToString(System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        tmpStr += string.Join(";", tmpRow) + "\n";
+                    }
+                    File.WriteAllText(path, tmpStr);
                     break;
             }
             return weights;
         }
-     
+        abstract public void Recognize(Network net, Layer nextLayer); //для прямых проходов
+        abstract public double[] BackwardPass(double[] stuff); //и обратных
     }
 }
+
+
+//как генерируется синаптические веса
+// Синаптические веса должны быть случайными значениями от -1 до +1
+// У каждого нейрона синаптические веса и порог, среднее мат ожидание должно быть = 0
+// Среднее квадратичное отклонение должно быть = 1

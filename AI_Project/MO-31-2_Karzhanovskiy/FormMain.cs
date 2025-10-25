@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using MO_31_2_Karzhanovskiy.NeuroNet;
+
 
 namespace MO_31_2_Karzhanovskiy
 {
     public partial class FormMain : Form
     {
         private double[] inputPixels;
+        private Network network;
         //Конструктор
         public FormMain()
         {
             InitializeComponent();
 
             inputPixels = new double[15];
+            network = new Network();
         }
         //Обработчик события
         private void Changing_State_Pixel_Button_Click(object sender, EventArgs e)
@@ -61,6 +60,19 @@ namespace MO_31_2_Karzhanovskiy
             tmpStr += "\n";
 
             File.AppendAllText(path, tmpStr);
+        }
+
+        private void buttonRecognize_Click(object sender, EventArgs e)
+        {
+            network.ForwardPass(network, inputPixels);
+            labelOutput.Text = network.Fact.ToList().IndexOf(network.Fact.Max()).ToString();
+            labelProbability.Text = (100 * network.Fact.Max()).ToString("0.00") + "%";
+        }
+
+        private void buttonTrain_Click(object sender, EventArgs e)
+        {
+            network.Train(network);
+            MessageBox.Show("Обучение успешно завершено. ", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
