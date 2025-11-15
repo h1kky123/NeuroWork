@@ -53,7 +53,24 @@ namespace MO_31_2_Karzhanovskiy.NeuroNet
         }
         public void Shuffling_Array_Rows(double[,] arr)
         {
-            //написать дома
+            Random random = new Random();
+            int rowCount = arr.GetLength(0);
+            int colCount = arr.GetLength(1);
+
+            // Алгоритм Фишера-Йетса для перемешивания строк
+            for (int i = rowCount - 1; i > 0; i--)
+            {
+                // Выбираем случайный индекс от 0 до i
+                int j = random.Next(i + 1);
+
+                // Меняем местами строки i и j
+                for (int col = 0; col < colCount; col++)
+                {
+                    double temp = arr[i, col];
+                    arr[i, col] = arr[j, col];
+                    arr[j, col] = temp;
+                }
+            }
         }
         //метод Фишера-Йетса
     }

@@ -14,8 +14,8 @@ namespace MO_31_2_Karzhanovskiy.NeuroNet
         string pathFileWeights; //путь к файлу саниптическов весов
         protected int numofneurons; //число нейронов текущего слоя
         protected int numofprevneurons; //число нейронов предыдущего слоя
-        protected const double learningrate = 0.060; //скорость обучения
-        protected const double momentum = 0.050d; //момент инерции
+        protected const double learningrate = 0.0001; //скорость обучения
+        protected const double momentum = 0.00d; //момент инерции
         protected double[,] lastdeltaweights; //веса предыдущей итерации
         protected Neuron[] neurons; //массив нейронов текущего слоя
 
@@ -107,28 +107,38 @@ namespace MO_31_2_Karzhanovskiy.NeuroNet
 
                 case MemoryMode.INIT:
                     Random random = new Random();
+
                     for (int i = 0; i < numofneurons; i++)
                     {
-                        double sum = 0.0;
-                        double squaredSum = 0.0;
-
-                        //Генерация весов
+                        // Генерируем веса с нормальным распределением
                         for (int j = 0; j < numofprevneurons + 1; j++)
                         {
-                            weights[i, j] = random.NextDouble() * 2.0 - 1.0;
-                            sum += weights[i, j];
-                            squaredSum += weights[i, j] * weights[i, j];
+                            double u1 = 1.0 - random.NextDouble();
+                            double u2 = 1.0 - random.NextDouble();
+                            weights[i, j] = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
                         }
 
-                        //Вычисляем среднее и дисперсию
-                        double mean = sum / (numofprevneurons + 1);
-                        double variance = (squaredSum / (numofprevneurons + 1)) - (mean * mean);
-                        double root = Math.Sqrt(variance);
+                        // Гарантируем точное N(0,1) для каждого нейрона
+                        double mean = 0;
+                        double stdDev = 0;
 
-                        //Нормализуем веса
+                        // Вычисляем текущие статистики
                         for (int j = 0; j < numofprevneurons + 1; j++)
                         {
-                            weights[i, j] = (weights[i, j] - mean) / root;
+                            mean += weights[i, j];
+                        }
+                        mean /= (numofprevneurons + 1);
+
+                        for (int j = 0; j < numofprevneurons + 1; j++)
+                        {
+                            stdDev += (weights[i, j] - mean) * (weights[i, j] - mean);
+                        }
+                        stdDev = Math.Sqrt(stdDev / (numofprevneurons + 1));
+
+                        // Стандартизируем к точному N(0,1)
+                        for (int j = 0; j < numofprevneurons + 1; j++)
+                        {
+                            weights[i, j] = (weights[i, j] - mean) / stdDev;
                         }
                     }
 

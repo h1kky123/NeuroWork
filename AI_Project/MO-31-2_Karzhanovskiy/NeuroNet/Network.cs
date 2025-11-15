@@ -30,7 +30,7 @@ namespace MO_31_2_Karzhanovskiy.NeuroNet
         public void Train(Network net)
         {
             net.input_layer = new InputLayer(NetworkMode.Train); //инициализация входного слоя
-            int epoches = 10; //количество эпох обучения
+            int epoches = 15; //количество эпох обучения
             double tmpSumError; //временная переменная ошибок
             double[] errors; //вектор сигнала ошибки входного слоя
             double[] temp_gsum1; //вектор градиента 1-го скрытого слоя

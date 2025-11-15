@@ -47,10 +47,6 @@ namespace MO_31_2_Karzhanovskiy.NeuroNet
         //Логистическая функция активации нейрона
         private double logisticFunk(double sum)
         {
-            //Защита от переполнения
-            if (sum < -700) return 0.0;
-            if (sum > 700) return 1.0;
-
             return 1.0 / (1.0 + Exp(-sum));
         }
         //Производная логистической функции активации нейрона

@@ -72,6 +72,10 @@ namespace MO_31_2_Karzhanovskiy
         private void buttonTrain_Click(object sender, EventArgs e)
         {
             network.Train(network);
+
+            for(int i = 0; i < network.E_error_avr.Length; i++)
+                chartEavr.Series[0].Points.AddY(network.E_error_avr[i]);
+
             MessageBox.Show("Обучение успешно завершено. ", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
